@@ -50,6 +50,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 22,
                 'is_featured' => true,
                 'status' => 'active',
+                'image_url' => 'images/products/dell-xps-13.jpg',
             ],
             [
                 'name' => 'HP EliteBook Business Pro',
@@ -61,6 +62,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 16,
                 'is_featured' => true,
                 'status' => 'active',
+                'image_url' => 'images/products/hp-elitebook.jpg',
             ],
             [
                 'name' => 'Apple MacBook Air M-Series',
@@ -72,6 +74,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 12,
                 'is_featured' => true,
                 'status' => 'active',
+                'image_url' => 'images/products/macbook-air.jpg',
             ],
             [
                 'name' => 'Samsung Galaxy Pro Phone',
@@ -83,6 +86,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 31,
                 'is_featured' => true,
                 'status' => 'active',
+                'image_url' => 'images/products/samsung-galaxy-pro.jpg',
             ],
             [
                 'name' => 'iPhone Business Edition',
@@ -94,6 +98,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 28,
                 'is_featured' => true,
                 'status' => 'active',
+                'image_url' => 'images/products/iphone-business.jpg',
             ],
             [
                 'name' => 'Sony Studio Headphones',
@@ -105,6 +110,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 45,
                 'is_featured' => true,
                 'status' => 'active',
+                'image_url' => 'images/products/sony-studio-headphones.jpg',
             ],
             [
                 'name' => 'Dell 27 Inch 4K Monitor',
@@ -116,6 +122,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 18,
                 'is_featured' => false,
                 'status' => 'active',
+                'image_url' => 'images/products/dell-4k-monitor.jpg',
             ],
             [
                 'name' => 'HP UltraWide Office Monitor',
@@ -127,6 +134,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 14,
                 'is_featured' => false,
                 'status' => 'active',
+                'image_url' => 'images/products/hp-ultrawide-monitor.jpg',
             ],
             [
                 'name' => 'Samsung Wireless Earbuds Pro',
@@ -138,6 +146,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 52,
                 'is_featured' => false,
                 'status' => 'active',
+                'image_url' => 'images/products/samsung-earbuds.jpg',
             ],
             [
                 'name' => 'Apple Magic Keyboard',
@@ -149,6 +158,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 38,
                 'is_featured' => false,
                 'status' => 'active',
+                'image_url' => 'images/products/apple-magic-keyboard.jpg',
             ],
             [
                 'name' => 'Dell Precision Wireless Mouse',
@@ -160,6 +170,7 @@ class DatabaseSeeder extends Seeder
                 'stock' => 70,
                 'is_featured' => false,
                 'status' => 'active',
+                'image_url' => 'images/products/dell-wireless-mouse.jpg',
             ],
             [
                 'name' => 'Sony Portable Bluetooth Speaker',
@@ -171,28 +182,24 @@ class DatabaseSeeder extends Seeder
                 'stock' => 40,
                 'is_featured' => false,
                 'status' => 'active',
+                'image_url' => 'images/products/sony-bluetooth-speaker.jpg',
             ],
         ];
 
         foreach ($products as $item) {
-            $brandName = collect($brands)->firstWhere('slug', $item['brand'])['name'];
-            $categoryName = collect($categories)->firstWhere('slug', $item['category'])['name'];
-
             Product::updateOrCreate(
                 ['sku' => $item['sku']],
                 [
                     'name' => $item['name'],
                     'slug' => Str::slug($item['name']),
                     'category_id' => $categoryMap[$item['category']],
-                    'category_name' => $categoryName,
                     'brand_id' => $brandMap[$item['brand']],
-                    'brand_name' => $brandName,
                     'description' => $item['description'],
                     'price' => $item['price'],
                     'stock' => $item['stock'],
                     'is_featured' => $item['is_featured'],
                     'status' => $item['status'],
-                    'image_url' => null,
+                    'image_url' => $item['image_url'] ?? 'images/products/default-product.jpg',
                 ]
             );
         }

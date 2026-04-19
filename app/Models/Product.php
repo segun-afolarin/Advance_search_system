@@ -14,9 +14,7 @@ class Product extends Model
 
     protected $fillable = [
         'category_id',
-        'category_name',
         'brand_id',
-        'brand_name',
         'name',
         'slug',
         'sku',
@@ -44,15 +42,13 @@ class Product extends Model
     }
 
     #[SearchUsingPrefix(['sku'])]
-    #[SearchUsingFullText(['name', 'description', 'brand_name', 'category_name'])]
+    #[SearchUsingFullText(['name', 'description'])]
     public function toSearchableArray(): array
     {
         return [
             'id' => $this->id,
             'category_id' => $this->category_id,
-            'category_name' => $this->category_name,
             'brand_id' => $this->brand_id,
-            'brand_name' => $this->brand_name,
             'name' => $this->name,
             'sku' => $this->sku,
             'description' => $this->description,
